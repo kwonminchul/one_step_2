@@ -1,5 +1,3 @@
-const { json } = require("stream/consumers");
-
 const toDoForm = document.getElementById("todoForm");
 const toDoInput = document.querySelector("#todoForm input");
 const toDoList = document.getElementById("todoList");
@@ -25,6 +23,7 @@ function paintToDo(newTodo) {
   const span = document.createElement("span");
   span.innerText = newTodo.text;
   const button = document.createElement("button");
+  button.className = "buttonName";
   button.innerText = "❌";
   button.addEventListener("click", deleteToDo);
   li.appendChild(span);
@@ -38,7 +37,7 @@ function handleToDoSubmit(event) {
   toDoInput.value = "";
   const newTodoObj = {
     text: newTodo,
-    id: Date.new(),
+    id: Date.now(),
   };
   toDos.push(newTodoObj);
   paintToDo(newTodoObj);
@@ -47,10 +46,10 @@ function handleToDoSubmit(event) {
 
 toDoForm.addEventListener("submit", handleToDoSubmit);
 
-const saveToDos = localStorage.getItem(TODOS_KEY);
+const savedToDos = localStorage.getItem(TODOS_KEY);
 
-if (saveToDos !== null) {
-  const parsedToDos = JSON.parse(saveToDos);
+if (savedToDos !== null) {
+  const parsedToDos = JSON.parse(savedToDos);
   toDos = parsedToDos;
   parsedToDos.forEach(paintToDo);
 }
