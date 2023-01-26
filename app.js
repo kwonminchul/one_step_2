@@ -1,1 +1,30 @@
-alert("hi");
+const loginForm = document.querySelector("#loginForm");
+const loginInput = document.querySelector("#loginForm input");
+const greeting = document.querySelector("#greeting");
+
+const HIDDEN_CLASSNAME = "hidden";
+const USERNAME_KEY = "username";
+
+function onLoginSubmit(event) {
+  event.preventDefault();
+  loginForm.classList.add("hidden");
+  const username = loginInput.value;
+  localStorage.setItem(USERNAME_KEY, username);
+  greeting.innerText = `Hello ${username}`;
+  // greeting.innerText = "Hello " + username 같음
+  paintGreetings(username);
+}
+
+function paintGreetings(username) {
+  greeting.innerText = `Hello ${username}`;
+  greeting.classList.remove(HIDDEN_CLASSNAME);
+}
+
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+if (savedUsername === null) {
+  loginForm.classList.remove(HIDDEN_CLASSNAME);
+  loginForm.addEventListener("submit", onLoginSubmit);
+} else {
+  paintGreetings();
+}
